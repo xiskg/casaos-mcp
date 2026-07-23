@@ -11,16 +11,51 @@
 
 ## 📖 Table of Contents
 1. [What is this project and what problem does it solve?](#-what-is-this-project-and-what-problem-does-it-solve)
-2. [Prerequisites (What you need to have installed)](#-prerequisites-what-you-need-to-have-installed)
-3. [Step-by-Step: How to Clone & Build (From Scratch)](#-step-by-step-how-to-clone--build-from-scratch)
-4. [How to Configure in Your Favorite AI Assistant](#-how-to-configure-in-your-favorite-ai-assistant)
+2. [Security Best Practices & Non-Root Setup](#-security-best-practices--non-root-setup)
+3. [Prerequisites (What you need to have installed)](#-prerequisites-what-you-need-to-have-installed)
+4. [Step-by-Step: How to Clone & Build (From Scratch)](#-step-by-step-how-to-clone--build-from-scratch)
+5. [How to Configure in Your Favorite AI Assistant](#-how-to-configure-in-your-favorite-ai-assistant)
    - [In Antigravity (Gemini CLI / AGY)](#1-in-antigravity-gemini-cli--agy)
    - [In Cursor IDE](#2-in-cursor-ide)
    - [In Claude Desktop](#3-in-claude-desktop)
    - [In Windsurf](#4-in-windsurf)
-5. [Explanatory Table of All 14 Native Tools](#-explanatory-table-of-all-14-native-tools)
-6. [Troubleshooting & F.A.Q.](#-troubleshooting--faq)
-7. [License](#-license)
+6. [Explanatory Table of All 14 Native Tools](#-explanatory-table-of-all-14-native-tools)
+7. [Troubleshooting & F.A.Q.](#-troubleshooting--faq)
+8. [License](#-license)
+
+---
+
+## 🔒 Security Best Practices & Non-Root Setup
+
+> [!TIP]
+> **Don't want to give root SSH access to an AI?**  
+> We strongly agree with the principle of least privilege! You do **NOT** need to use the `root` account. Follow the quick guide below to create a dedicated, unprivileged Linux user for your AI assistant.
+
+### 🛡️ How to Create a Dedicated Non-Root User (`casaos-mcp`)
+
+Run these commands **once** on your CasaOS server via terminal:
+
+```bash
+# 1. Create a dedicated unprivileged user named 'casaos-mcp'
+sudo useradd -m -s /bin/bash casaos-mcp
+
+# 2. Set a password for the new user
+sudo passwd casaos-mcp
+
+# 3. Add the user to the docker group (allows container management without root)
+sudo usermod -aG docker casaos-mcp
+
+# 4. Grant access to CasaOS app configuration directory
+sudo chown -R :docker /var/lib/casaos/apps
+sudo chmod -R 775 /var/lib/casaos/apps
+```
+
+Now, in your `mcp_config.json`, simply set:
+```json
+"CASAOS_USER": "casaos-mcp",
+"CASAOS_PASSWORD": "your_casaos_mcp_password"
+```
+*(This isolates your underlying Linux operating system so the AI assistant can only manage Docker containers and CasaOS app configurations!)*
 
 ---
 
@@ -54,7 +89,7 @@ Before getting started, make sure your local machine (where your AI assistant ru
 
 ### 2. On your CasaOS Server:
 * **Active SSH Access:**  
-  You need to know your CasaOS server **IP Address** (e.g., `192.168.1.100`), your **SSH Username** (usually `root` or an admin user), and your **SSH Password**.
+  You need to know your CasaOS server **IP Address** (e.g., `192.168.1.100`), your **SSH Username** (`root` or dedicated `casaos-mcp` user), and your **SSH Password** or **SSH Private Key**.
 
 ---
 
@@ -109,7 +144,7 @@ Add or open your MCP configuration file at `~/.gemini/antigravity-cli/mcp_config
       "env": {
         "CASAOS_HOST": "192.168.1.100",
         "CASAOS_SSH_PORT": "22",
-        "CASAOS_USER": "root",
+        "CASAOS_USER": "casaos-mcp",
         "CASAOS_PASSWORD": "your_ssh_password_here"
       }
     }
@@ -131,7 +166,7 @@ Add or open your MCP configuration file at `~/.gemini/antigravity-cli/mcp_config
 5. Add environment variables under `ENV`:
    ```env
    CASAOS_HOST=192.168.1.100
-   CASAOS_USER=root
+   CASAOS_USER=casaos-mcp
    CASAOS_PASSWORD=your_ssh_password_here
    ```
 
@@ -150,7 +185,7 @@ Open your `claude_desktop_config.json` file (located in `~/Library/Application S
       "env": {
         "CASAOS_HOST": "192.168.1.100",
         "CASAOS_SSH_PORT": "22",
-        "CASAOS_USER": "root",
+        "CASAOS_USER": "casaos-mcp",
         "CASAOS_PASSWORD": "your_ssh_password_here"
       }
     }
@@ -173,7 +208,7 @@ Edit your `~/.codeium/windsurf/mcp_config.json` file:
       "env": {
         "CASAOS_HOST": "192.168.1.100",
         "CASAOS_SSH_PORT": "22",
-        "CASAOS_USER": "root",
+        "CASAOS_USER": "casaos-mcp",
         "CASAOS_PASSWORD": "your_ssh_password_here"
       }
     }
@@ -215,7 +250,7 @@ Once connected, your AI assistant automatically unlocks the following **14 tools
 
 ### 2. The AI returns a "Permission Denied" SSH error.
 > **Cause:** The SSH credentials in `CASAOS_USER` or `CASAOS_PASSWORD` are incorrect, or the user lacks permissions to manage Docker/systemctl.  
-> **Solution:** Use the `root` user or ensure your user belongs to the `docker` and `sudo` groups.
+> **Solution:** Ensure your dedicated user (e.g. `casaos-mcp`) belongs to the `docker` group (`sudo usermod -aG docker casaos-mcp`).
 
 ### 3. The AI says command `node` was not found.
 > **Cause:** The AI client process cannot resolve Node.js in your system PATH.  
