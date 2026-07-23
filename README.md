@@ -1,7 +1,7 @@
 # 🏠 CasaOS MCP Server (Model Context Protocol)
 
-> **O Guia Definitivo e Completo para integrar seu CasaOS com IAs (Antigravity, Cursor, Claude, Windsurf)**  
-> *nunca mais sofra com contêineres virando "Aplicativos Legados" ou ícones quebrados de caixas cinzas/azuis!*
+> **The Ultimate & Complete Guide to Integrating Your CasaOS Home Server with AI Coding Assistants (Antigravity, Cursor, Claude, Windsurf)**  
+> *Never suffer from AI containers turning into "Legacy Applications" or broken 3D box icons again!*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/Node.js-%3E%3D18.0.0-green.svg)](https://nodejs.org/)
@@ -9,108 +9,108 @@
 
 ---
 
-## 📖 Índice / Table of Contents
-1. [O que é este projeto e qual problema ele resolve?](#-o-que-é-este-projeto-e-qual-problema-ele-resolve)
-2. [Pré-requisitos (O que você precisa ter instalado)](#-pré-requisitos-o-que-você-precisa-ter-instalado)
-3. [Passo a Passo: Como Baixar e Compilar (Do Zero)](#-passo-a-passo-como-baixar-e-compilar-do-zero)
-4. [Como Configurar na sua IA favorita](#-como-configurar-na-sua-ia-favorita)
-   - [No Antigravity (Gemini CLI / AGY)](#1-no-antigravity-gemini-cli--agy)
-   - [No Cursor IDE](#2-no-cursor-ide)
-   - [No Claude Desktop](#3-no-claude-desktop)
-   - [No Windsurf](#4-no-windsurf)
-5. [Tabela Explicativa das 14 Ferramentas Nativas](#-tabela-explicativa-das-14-ferramentas-nativas)
-6. [Solução de Problemas (Troubleshooting / F.A.Q)](#-solução-de-problemas-troubleshooting--faq)
-7. [Licença](#-licença)
+## 📖 Table of Contents
+1. [What is this project and what problem does it solve?](#-what-is-this-project-and-what-problem-does-it-solve)
+2. [Prerequisites (What you need to have installed)](#-prerequisites-what-you-need-to-have-installed)
+3. [Step-by-Step: How to Clone & Build (From Scratch)](#-step-by-step-how-to-clone--build-from-scratch)
+4. [How to Configure in Your Favorite AI Assistant](#-how-to-configure-in-your-favorite-ai-assistant)
+   - [In Antigravity (Gemini CLI / AGY)](#1-in-antigravity-gemini-cli--agy)
+   - [In Cursor IDE](#2-in-cursor-ide)
+   - [In Claude Desktop](#3-in-claude-desktop)
+   - [In Windsurf](#4-in-windsurf)
+5. [Explanatory Table of All 14 Native Tools](#-explanatory-table-of-all-14-native-tools)
+6. [Troubleshooting & F.A.Q.](#-troubleshooting--faq)
+7. [License](#-license)
 
 ---
 
-## ❓ O que é este projeto e qual problema ele resolve?
+## ❓ What is this project and what problem does it solve?
 
-Se você usa o **CasaOS** no seu servidor doméstico e gosta de usar assistentes de Inteligência Artificial para te ajudar a criar ou atualizar seus serviços Docker, já deve ter reparado neste padrão irritante:
+If you run **CasaOS** on your home server and use AI coding assistants to help you deploy or manage Docker services, you've likely encountered this frustrating issue:
 
-👉 **O Problema:** Quando a IA roda comandos normais como `docker run` ou `docker compose up`, o CasaOS não reconhece o aplicativo como nativo. Ele joga o contêiner no rodapé da página sob a seção **"Aplicativo legado (a ser reconstruído)"**, colocando um ícone sem graça de uma caixa 3D genérica e sem link para abrir a interface web do app.
+👉 **The Problem:** When an AI assistant runs standard terminal commands like `docker run` or `docker compose up`, CasaOS does not recognize the deployment as a native application. It banishes the container to the bottom of the dashboard under **"Legacy application (to be rebuilt)"**, displaying a generic 3D box icon with no web UI shortcut link.
 
-🚀 **A Solução:** O **CasaOS MCP Server** é uma ponte de comunicação em tempo real entre a sua IA e o seu CasaOS. Em vez de a IA rodar comandos brutos de Docker no escuro, ela ganha **14 ferramentas especializadas** para injetar as tags `x-casaos`, configurar os ícones vetorizados, ajustar portas e manter tudo **100% nativo e bonito** no seu painel.
+🚀 **The Solution:** The **CasaOS MCP Server** acts as a real-time bridge between your AI assistant and your CasaOS host. Instead of the AI executing raw, unmanaged Docker commands, it gains **14 specialized native tools** to inject `x-casaos` metadata, configure vector icons, set web UI ports, and keep everything **100% native, clean, and beautiful** on your dashboard.
 
 ---
 
-## 🛠️ Pré-requisitos (O que você precisa ter instalado)
+## 🛠️ Prerequisites (What you need to have installed)
 
-Antes de começar, certifique-se de que a sua máquina local (onde a IA roda, ex: seu Mac ou PC) e o seu Servidor CasaOS atendem aos requisitos:
+Before getting started, make sure your local machine (where your AI assistant runs) and your CasaOS server meet the following requirements:
 
-### 1. Na sua máquina local (onde está o Cursor, Claude ou Antigravity):
-* **Node.js (versão 18 ou superior):**  
-  Para testar se você tem o Node instalado, abra o seu terminal e digite:
+### 1. On your local machine (Mac / Windows / Linux where Cursor/Claude runs):
+* **Node.js (version 18 or higher):**  
+  To check if Node.js is installed, open your terminal and run:
   ```bash
   node -v
   ```
-  *(Se aparecer algo como `v20.x.x` ou `v18.x.x`, você está pronto! Se der comando não encontrado, baixe e instale no site oficial: [nodejs.org](https://nodejs.org/))*
+  *(If it outputs something like `v20.x.x` or `v18.x.x`, you are ready! If command not found, download and install it from [nodejs.org](https://nodejs.org/))*
 
 * **Git:**  
-  Para testar se tem o Git:
+  To check if Git is installed:
   ```bash
   git --version
   ```
 
-### 2. No seu servidor CasaOS:
-* **Acesso SSH ativo:**  
-  O CasaOS é baseado em Linux (Ubuntu, Debian, CasaOS OS). Você precisa saber o **IP do Servidor** (ex: `192.168.1.100`), o **Usuário SSH** (geralmente `root` ou seu usuário administrador) e a **Senha do SSH**.
+### 2. On your CasaOS Server:
+* **Active SSH Access:**  
+  You need to know your CasaOS server **IP Address** (e.g., `192.168.1.100`), your **SSH Username** (usually `root` or an admin user), and your **SSH Password**.
 
 ---
 
-## 🏗️ Passo a Passo: Como Baixar e Compilar (Do Zero)
+## 🏗️ Step-by-Step: How to Clone & Build (From Scratch)
 
-Siga estes 4 comandos simples no terminal do seu computador local:
+Run these 4 simple commands in your local machine terminal:
 
-### Passo 1: Clonar o repositório
+### Step 1: Clone the repository
 ```bash
 git clone https://github.com/xiskg/casaos-mcp.git
 ```
 
-### Passo 2: Entrar na pasta do projeto
+### Step 2: Navigate into the project folder
 ```bash
 cd casaos-mcp
 ```
 
-### Passo 3: Instalar as dependências
+### Step 3: Install dependencies
 ```bash
 npm install
 ```
-*(Isso vai baixar todas as bibliotecas necessárias para o MCP funcionar)*
+*(This downloads all required libraries for the MCP server)*
 
-### Passo 4: Compilar o código TypeScript para JavaScript
+### Step 4: Compile TypeScript to JavaScript
 ```bash
 npm run build
 ```
-*(Este comando gera a pasta `dist/` com o arquivo `dist/index.js` compilado e pronto para rodar!)*
+*(This builds the compiled JavaScript file inside `dist/index.js` ready to run!)*
 
 ---
 
-## ⚙️ Como Configurar na sua IA favorita
+## ⚙️ How to Configure in Your Favorite AI Assistant
 
-Agora você vai indicar para a sua IA onde está o arquivo `dist/index.js` que acabou de compilar e quais são as credenciais do seu CasaOS.
+Now you will point your AI assistant to the compiled `dist/index.js` file and provide your CasaOS SSH credentials.
 
 > [!IMPORTANT]
-> **Atenção nas variáveis de ambiente!**  
-> Substitua os valores de exemplo (`192.168.1.100` e `sua_senha_aqui`) pelas informações **reais** do seu servidor CasaOS.
+> **Pay attention to environment variables!**  
+> Replace the example values (`192.168.1.100` and `your_ssh_password_here`) with your **actual** CasaOS server details.
 
 ---
 
-### 1. No Antigravity (Gemini CLI / AGY)
+### 1. In Antigravity (Gemini CLI / AGY)
 
-Abra ou crie o seu arquivo de configuração MCP local em `~/.gemini/antigravity-cli/mcp_config.json` ou `mcp_config.json` da sua workspace:
+Add or open your MCP configuration file at `~/.gemini/antigravity-cli/mcp_config.json` (or workspace `mcp_config.json`):
 
 ```json
 {
   "mcpServers": {
     "casaos": {
       "command": "node",
-      "args": ["/CAMINHO/ABSOLUTO/PARA/casaos-mcp/dist/index.js"],
+      "args": ["/ABSOLUTE/PATH/TO/casaos-mcp/dist/index.js"],
       "env": {
         "CASAOS_HOST": "192.168.1.100",
         "CASAOS_SSH_PORT": "22",
         "CASAOS_USER": "root",
-        "CASAOS_PASSWORD": "sua_senha_ssh_aqui"
+        "CASAOS_PASSWORD": "your_ssh_password_here"
       }
     }
   }
@@ -119,39 +119,39 @@ Abra ou crie o seu arquivo de configuração MCP local em `~/.gemini/antigravity
 
 ---
 
-### 2. No Cursor IDE
+### 2. In Cursor IDE
 
-1. Abra o **Cursor**.
-2. Vá em `Settings` (Configurações) -> `Features` -> `MCP Servers`.
-3. Clique em **"+ Add New MCP Server"**.
-4. Preencha os campos:
+1. Open **Cursor**.
+2. Go to `Settings` -> `Features` -> `MCP Servers`.
+3. Click **"+ Add New MCP Server"**.
+4. Fill in the fields:
    - **Name:** `casaos`
    - **Type:** `command`
-   - **Command:** `node /CAMINHO/ABSOLUTO/PARA/casaos-mcp/dist/index.js`
-5. Adicione as variáveis de ambiente em `ENV`:
+   - **Command:** `node /ABSOLUTE/PATH/TO/casaos-mcp/dist/index.js`
+5. Add environment variables under `ENV`:
    ```env
    CASAOS_HOST=192.168.1.100
    CASAOS_USER=root
-   CASAOS_PASSWORD=sua_senha_ssh_aqui
+   CASAOS_PASSWORD=your_ssh_password_here
    ```
 
 ---
 
-### 3. No Claude Desktop
+### 3. In Claude Desktop
 
-No seu computador, abra o arquivo `claude_desktop_config.json` (localizado em `~/Library/Application Support/Claude/` no macOS ou `%APPDATA%\Claude\` no Windows) e adicione:
+Open your `claude_desktop_config.json` file (located in `~/Library/Application Support/Claude/` on macOS or `%APPDATA%\Claude\` on Windows) and add:
 
 ```json
 {
   "mcpServers": {
     "casaos": {
       "command": "node",
-      "args": ["/CAMINHO/ABSOLUTO/PARA/casaos-mcp/dist/index.js"],
+      "args": ["/ABSOLUTE/PATH/TO/casaos-mcp/dist/index.js"],
       "env": {
         "CASAOS_HOST": "192.168.1.100",
         "CASAOS_SSH_PORT": "22",
         "CASAOS_USER": "root",
-        "CASAOS_PASSWORD": "sua_senha_ssh_aqui"
+        "CASAOS_PASSWORD": "your_ssh_password_here"
       }
     }
   }
@@ -160,20 +160,21 @@ No seu computador, abra o arquivo `claude_desktop_config.json` (localizado em `~
 
 ---
 
-### 4. No Windsurf
+### 4. In Windsurf
 
-No Windsurf, edite o seu arquivo `~/.codeium/windsurf/mcp_config.json` da mesma forma:
+Edit your `~/.codeium/windsurf/mcp_config.json` file:
 
 ```json
 {
   "mcpServers": {
     "casaos": {
       "command": "node",
-      "args": ["/CAMINHO/ABSOLUTO/PARA/casaos-mcp/dist/index.js"],
+      "args": ["/ABSOLUTE/PATH/TO/casaos-mcp/dist/index.js"],
       "env": {
         "CASAOS_HOST": "192.168.1.100",
+        "CASAOS_SSH_PORT": "22",
         "CASAOS_USER": "root",
-        "CASAOS_PASSWORD": "sua_senha_ssh_aqui"
+        "CASAOS_PASSWORD": "your_ssh_password_here"
       }
     }
   }
@@ -182,47 +183,47 @@ No Windsurf, edite o seu arquivo `~/.codeium/windsurf/mcp_config.json` da mesma 
 
 ---
 
-## 📊 Tabela Explicativa das 14 Ferramentas Nativas
+## 📊 Explanatory Table of All 14 Native Tools
 
-Assim que o MCP Server estiver conectado, a sua IA aprenderá automaticamente as seguintes **14 habilidades**:
+Once connected, your AI assistant automatically unlocks the following **14 tools**:
 
-| Ferramenta MCP | O que ela faz? (Explicação simples) | Exemplo de uso pela IA |
+| MCP Tool Name | What it does | Practical AI Usage Example |
 | :--- | :--- | :--- |
-| `casaos_list_apps` | Lista todos os apps instalados, composes e contêineres legados. | *"Deixa eu ver o que você já tem instalado no CasaOS..."* |
-| `casaos_deploy_app` | Cria e sobe um novo app com ícone, título e porta web nativos. | *"Vou subir o Gitea nativamente com a logo oficial!"* |
-| `casaos_convert_legacy_app` | Pega um app "legado" e transforma em App Nativo do CasaOS. | *"Vou converter o seu n8n legado para o painel principal."* |
-| `casaos_set_app_icon` | Atualiza o ícone (SVG/PNG) e título de qualquer app do painel. | *"Vou colocar um ícone vetorizado bonito no seu aplicativo."* |
-| `casaos_manage_app` | Inicia (`start`), para (`stop`) ou reinicia (`restart`) apps. | *"Reiniciando o contêiner do PostgreSQL..."* |
-| `casaos_get_app_logs` | Lê os logs em tempo real do app para debugar ou achar senhas. | *"Procurando a senha inicial gerada no log do app..."* |
-| `casaos_get_system_stats` | Mostra uso de CPU %, RAM %, Espaço em Disco e Uptime. | *"Seu servidor está usando 15% de CPU e 4GB de RAM."* |
-| `casaos_search_icon` | Pesquisa ícones vetorizados em SVG na API do Iconify. | *"Buscando o ícone oficial do WordPress..."* |
-| `casaos_read_app_config` | Lê o arquivo `docker-compose.yml` completo de um app. | *"Inspeccionando as portas e volumes configurados..."* |
-| `casaos_update_app_env` | Altera senhas/variáveis de ambiente no Compose com segurança. | *"Atualizando a variável POSTGRES_PASSWORD para você."* |
-| `casaos_backup_app_data` | Cria um arquivo `.tar.gz` de backup da pasta do app em `/DATA/AppData`. | *"Gerando backup dos dados antes de atualizar..."* |
-| `casaos_manage_appstore` | Gerencia e adiciona Lojas de Apps de terceiros (Big Bear, etc). | *"Adicionando a loja comunitária do Big Bear..."* |
-| `casaos_run_shell_command` | Executa comandos Linux SSH no servidor para manutenções avançadas. | *"Limpando imagens antigas do Docker (`docker prune`)..."* |
-| `casaos_list_storage` | Exibe os HDs e partições montados no diretório `/DATA`. | *"Verificando o espaço livre no seu HD principal..."* |
+| `casaos_list_apps` | Lists all native apps, compose stacks, and legacy containers. | *"Checking what services are currently installed on your CasaOS..."* |
+| `casaos_deploy_app` | Deploys a new app/compose stack natively with title, icon, & web port. | *"Deploying Gitea natively with the official icon and web UI link!"* |
+| `casaos_convert_legacy_app` | Converts an unmanaged legacy container into a native CasaOS App. | *"Converting your legacy n8n container into a native CasaOS app stack."* |
+| `casaos_set_app_icon` | Updates dashboard icon (SVG/PNG) and title for any installed app. | *"Setting a high-resolution vector icon for your app."* |
+| `casaos_manage_app` | Starts (`start`), stops (`stop`), or restarts (`restart`) app stacks. | *"Restarting the PostgreSQL container..."* |
+| `casaos_get_app_logs` | Fetches real-time logs to debug issues or find initial setup passwords. | *"Searching container logs for the initial admin password..."* |
+| `casaos_get_system_stats` | Fetches CPU %, RAM %, Disk space usage, and server Uptime. | *"Your server is currently using 15% CPU and 4GB RAM."* |
+| `casaos_search_icon` | Searches high-resolution vector SVG icons via the Iconify API. | *"Searching for the official WordPress vector logo..."* |
+| `casaos_read_app_config` | Reads the parsed `docker-compose.yml` configuration of an app. | *"Inspecting configured ports and volumes for the app..."* |
+| `casaos_update_app_env` | Safely updates environment variables (passwords, ports) and recreates container. | *"Updating your POSTGRES_PASSWORD environment variable..."* |
+| `casaos_backup_app_data` | Creates a timestamped `.tar.gz` archive of `/DATA/AppData/<app_id>`. | *"Creating a safety backup of your app data before updating..."* |
+| `casaos_manage_appstore` | Adds, removes, or lists third-party AppStores (Big Bear, etc.). | *"Adding the Big Bear Community AppStore repository..."* |
+| `casaos_run_shell_command` | Runs maintenance Linux shell commands directly on the host over SSH. | *"Pruning unused Docker images (`docker system prune`)."* |
+| `casaos_list_storage` | Checks mounted storage drives under `/DATA`. | *"Checking free disk space on your primary storage drive..."* |
 
 ---
 
-## ❓ Solução de Problemas (Troubleshooting / F.A.Q)
+## ❓ Troubleshooting & F.A.Q.
 
-### 1. Meu ícone continua aparecendo como caixa 3D azul/cinza no CasaOS!
-> **Causa:** O link da imagem que a IA colocou está quebrado ou retornando erro HTTP 404.  
-> **Solução:** Diga para a sua IA:  
-> *"IA, use o `casaos_set_app_icon` com um ícone SVG válido do Iconify, ex: `https://api.iconify.design/mdi/docker.svg`"*
+### 1. My app icon still displays as a blue/grey 3D box on CasaOS!
+> **Cause:** The image URL provided by the AI is returning an HTTP 404 error or broken image link.  
+> **Solution:** Ask your AI assistant:  
+> *"Please use `casaos_set_app_icon` with a valid Iconify SVG URL, e.g. `https://api.iconify.design/mdi/docker.svg`"*
 
-### 2. A IA dá erro de "Permission Denied" no SSH
-> **Causa:** As credenciais em `CASAOS_USER` ou `CASAOS_PASSWORD` estão incorretas ou o usuário SSH não tem permissão para rodar comandos Docker/systemctl.  
-> **Solução:** Use o usuário `root` ou garanta que o seu usuário Linux pertence ao grupo `docker` e `sudo`.
+### 2. The AI returns a "Permission Denied" SSH error.
+> **Cause:** The SSH credentials in `CASAOS_USER` or `CASAOS_PASSWORD` are incorrect, or the user lacks permissions to manage Docker/systemctl.  
+> **Solution:** Use the `root` user or ensure your user belongs to the `docker` and `sudo` groups.
 
-### 3. A IA diz que não encontrou o comando `node`
-> **Causa:** O assistente de IA não encontrou o caminho do `node` no PATH do sistema.  
-> **Solução:** No seu `mcp_config.json`, em vez de apenas `"command": "node"`, coloque o caminho absoluto do Node.js, como `"command": "/usr/local/bin/node"` ou `"command": "/opt/homebrew/bin/node"`. (Descubra onde seu node está digitando `which node` no terminal).
+### 3. The AI says command `node` was not found.
+> **Cause:** The AI client process cannot resolve Node.js in your system PATH.  
+> **Solution:** In your `mcp_config.json`, replace `"command": "node"` with the absolute binary path, e.g. `"command": "/usr/local/bin/node"` or `"command": "/opt/homebrew/bin/node"`. (Run `which node` in your terminal to find your exact Node path).
 
 ---
 
-## 📄 Licença
+## 📄 License
 
-Este projeto é disponibilizado sob a licença open-source **MIT**.  
-Desenvolvido por **João de Almeida ([xiskg](https://github.com/xiskg))** para ajudar toda a comunidade do CasaOS! 🚀
+Distributed under the **MIT** Open-Source License.  
+Created by **João de Almeida ([xiskg](https://github.com/xiskg))** to empower the global CasaOS & AI community! 🚀
